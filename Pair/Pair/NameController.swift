@@ -36,6 +36,13 @@ class NameController {
         saveToPersistentStore()
     }
     
+    func removeName(name: Name) {
+        if let moc = name.managedObjectContext {
+            moc.deleteObject(name)
+            saveToPersistentStore()
+        }
+    }
+    
     func saveToPersistentStore() {
         let moc = Stack.sharedStack.managedObjectContext
         do {

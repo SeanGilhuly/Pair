@@ -11,17 +11,20 @@ import CoreData
 
 class PairRandomizerTableViewController: UITableViewController {
     
-    var names: Name?
+    var name: Name?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        NameController.sharedController.fetchedResultsController.delegate = self
+        
     }
     
     // MARK: IBActions
     
     @IBAction func addNameButtonTapped(sender: AnyObject) {
         addNameAlert()
+        tableView.reloadData()
     }
     
     @IBAction func randomizeButtonTapped(sender: AnyObject) {
@@ -91,6 +94,16 @@ class PairRandomizerTableViewController: UITableViewController {
         return cell
     }
     
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == .Delete {
+
+            guard let name = NameController.sharedController.fetchedResultsController.objectAtIndexPath(indexPath) as? Name else {
+                return
+            }
+            NameController.sharedController.removeName(name)
+        }
+    }
+    
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
        
         guard let sections = NameController.sharedController.fetchedResultsController.sections,
@@ -98,7 +111,7 @@ class PairRandomizerTableViewController: UITableViewController {
                 return nil
         }
         
-        if index == 2 {
+        if index == 0 {
             return "Group 1"
         } else {
             return "Group 2"

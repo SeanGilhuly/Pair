@@ -12,7 +12,7 @@ import CoreData
 class PairRandomizerTableViewController: UITableViewController {
     
     var name: Name?
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -24,14 +24,18 @@ class PairRandomizerTableViewController: UITableViewController {
     
     @IBAction func addNameButtonTapped(sender: AnyObject) {
         addNameAlert()
-        tableView.reloadData()
     }
     
     @IBAction func randomizeButtonTapped(sender: AnyObject) {
-        
+        randomName()
     }
     
-    // MARK: Function
+    // MARK: Functions
+    
+    func randomName() {
+
+    }
+  
     
     func addNameAlert() {
         
@@ -61,27 +65,27 @@ class PairRandomizerTableViewController: UITableViewController {
         alertController.addAction(createAction)
         
         alertController.view.setNeedsLayout()
-
+        
         presentViewController(alertController, animated: true, completion: nil)
     }
-
+    
     // MARK: - Table view data source
-
+    
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         guard let sections = NameController.sharedController.fetchedResultsController.sections else {
             return 0
         }
         return sections.count
     }
-
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let sections = NameController.sharedController.fetchedResultsController.sections else {
             return 0
         }
         return sections[section].numberOfObjects
     }
-
-
+    
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("nameCell", forIndexPath: indexPath)
         
@@ -96,7 +100,7 @@ class PairRandomizerTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
-
+            
             guard let name = NameController.sharedController.fetchedResultsController.objectAtIndexPath(indexPath) as? Name else {
                 return
             }
@@ -105,7 +109,7 @@ class PairRandomizerTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-       
+        
         guard let sections = NameController.sharedController.fetchedResultsController.sections,
             index = Int(sections[section].name) else {
                 return nil

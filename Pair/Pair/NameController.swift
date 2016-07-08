@@ -18,7 +18,9 @@ class NameController {
     init() {
         let request = NSFetchRequest(entityName: "Name")
         let groupSortDescriptor = NSSortDescriptor(key: "group", ascending: true)
-        request.sortDescriptors = [groupSortDescriptor]
+        let nameSortDescriptor = NSSortDescriptor(key: "name", ascending: true)
+
+        request.sortDescriptors = [groupSortDescriptor, nameSortDescriptor]
         
         self.fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: Stack.sharedStack.managedObjectContext, sectionNameKeyPath: "group", cacheName: nil)
         

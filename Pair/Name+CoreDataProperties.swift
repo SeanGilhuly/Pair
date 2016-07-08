@@ -14,7 +14,7 @@ import CoreData
 
 extension Name {
 
-    @NSManaged var name: String?
-    @NSManaged var group: NSNumber?
+    @NSManaged var name: String
+    @NSManaged var group: NSNumber
 
 }
